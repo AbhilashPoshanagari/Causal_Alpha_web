@@ -1,11 +1,159 @@
-.container { display: flex; }
-.sidebar { width: 200px; background: #2c3e50; color: white; padding: 20px; }
-.sidebar ul { list-style: none; padding: 0; }
-.sidebar li { padding: 10px; cursor: pointer; }
-.sidebar li:hover { background: #34495e; }
-.dashboard-container { flex-grow: 1; text-align: center; padding: 20px; }
-.chart-container { width: 80%; margin: auto; height: 400px; }
-.toggle-btn { margin-bottom: 10px; }
-.menu { list-style-type: none; padding: 0; }
-.menu li { margin: 5px 0; }
-.submenu { margin-left: 20px; list-style-type: circle; }
+ /* General container styling */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+    background: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: auto;
+    max-width: 90%;
+}
+
+/* Sidebar navigation */
+.sidebar {
+    width: 200px;
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.sidebar li:hover {
+    background: #34495e;
+}
+
+/* Dashboard container */
+.dashboard-container {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+}
+
+h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Chart container */
+.chart-container {
+    width: 90%;
+    margin: auto;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Input and Form Styling */
+.container-mat {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Input Fields */
+input[type="text"], mat-form-field {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Buttons */
+button {
+    padding: 10px 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Grid Styling */
+mat-grid-list {
+    width: 100%;
+}
+
+mat-grid-tile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Tables */
+ag-grid-angular {
+    width: 100%;
+    max-width: 900px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Prediction Chart Styling */
+p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px; /* Adjust as needed */
+  }
+  
+  mat-progress-spinner {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+

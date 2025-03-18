@@ -28,7 +28,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
-
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 interface Food {
   value: string;
@@ -39,7 +39,8 @@ interface Food {
   selector: 'app-ml-time-series',
   imports: [NgApexchartsModule, CommonModule, 
     FormsModule, AgGridAngular, MatGridListModule,
-    MatFormFieldModule, MatSelectModule, MatInputModule
+    MatFormFieldModule, MatSelectModule, MatInputModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './ml-time-series.component.html',
   styleUrl: './ml-time-series.component.css',
@@ -64,10 +65,7 @@ export class MlTimeSeriesComponent implements OnInit, OnDestroy {
   predictOptions: Array<any> = [];
   isMenuVisible = false;
   predictionTitle: ApexTitleSubtitle = { text: "Prediction with LSTM", align: "left" };
-  // actual_data: Array<any> = [];
-  // predicted_data: Array<any> = [];
   mlflow_run_id: string = 'f1cefc2508a14252a7a54b965e6b3502';
-  // mlflow_model: string = 'lstm_model';
   mlflow_reg_model: string = 'lstm_base_model';
   actual_price: Array<any> = [];
   predicted_price: Array<any> = []
@@ -81,13 +79,9 @@ export class MlTimeSeriesComponent implements OnInit, OnDestroy {
   metrics_col: Array<any> = [{ field: "Metric"}, {field: "Value"}]
   metrics: Array<any> = []
   parameters: Array<any> = []
-
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
   allRegistredModels: Array<any> = [];
+  public loading: boolean = false; // Add a loading flag
+  public pred_loading: boolean = false;
   constructor(private cdr: ChangeDetectorRef, 
     private ngZone: NgZone, private restapi: RestApiService, 
     private storageService: StorageService,
@@ -135,7 +129,7 @@ export class MlTimeSeriesComponent implements OnInit, OnDestroy {
     };
     
     this.dataLabels = { enabled: false };
-    this.markers = { size: 0 };
+    this.markers = { size: 0, hover: { size: 6 } };
     this.title = { text: "Stock Price Prediction", align: "left" };
     this.fill = { type: "solid"};
     this.yaxis = {
@@ -146,7 +140,8 @@ export class MlTimeSeriesComponent implements OnInit, OnDestroy {
     };
     this.xaxis = { type: "datetime", title: { text: "Date" } };
     this.tooltip = {
-      shared: false,
+      shared: true,
+      intersect: false,
       y: {
         formatter: (val) => `$${val.toFixed(2)}`
       }
@@ -154,6 +149,7 @@ export class MlTimeSeriesComponent implements OnInit, OnDestroy {
   }
 
   public fetchStockData(): void {
+    this.loading = true; // Start loading before API call
     this.restapi.getService(this.api_url+"/datasets/trained_data").subscribe((res: any) => {
       if(res.status == 200){
         console.log(res.data)
@@ -167,12 +163,16 @@ export class MlTimeSeriesComponent implements OnInit, OnDestroy {
           }
         ];
       }
+      this.loading = false; // Stop loading after success
+    }, (err) => {
+      console.error("Error fetching stock data", err);
+      this.loading = false; // Stop loading on error
     });
   }
 
 tableSetup(values: any){
   let keys = Object.keys(values);
-  let collectKeys = [{}]
+  let collectKeys: any = []
   for (let key = 0; key < keys.length; key++) {
       let obj = { field: keys[key] };
       collectKeys.push(obj)      
@@ -195,6 +195,7 @@ tableForMeticsSetup(column_name: string, values: any){
 }
 
 public predictionChart(responseData: any={}): void {
+  this.pred_loading = true;
 if(Object.keys(responseData).length  && responseData.values.length){
   this.parameters = this.tableForMeticsSetup("Parameter", this.responseData.params);
   this.metrics = this.tableForMeticsSetup("Metric", this.responseData.metrics);
@@ -208,6 +209,8 @@ if(Object.keys(responseData).length  && responseData.values.length){
         this.metrics = this.tableForMeticsSetup("Metric", this.responseData.metrics);
         this.prepareChartData(this.responseData.values)
       }
+      this.pred_loading = false;
+    }, (err) => {   this.pred_loading = false;
     });
     }
   }
@@ -230,6 +233,7 @@ if(Object.keys(responseData).length  && responseData.values.length){
   }
 
   get_run_id(model_name: string){
+    this.pred_loading = true;
     const url = this.api_url + "/mlflow/getallversions/" + model_name;
     this.restapi.getService(url).subscribe((res: any) => {
       if(res.status == 200){
@@ -237,7 +241,9 @@ if(Object.keys(responseData).length  && responseData.values.length){
       }else {
 
       }
-    })
+      this.pred_loading = false;
+    }, (err) => {this.pred_loading = false;
+  })
   }
 
   selectedRunId(event: string){

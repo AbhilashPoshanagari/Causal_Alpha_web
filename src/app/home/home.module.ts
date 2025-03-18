@@ -5,7 +5,6 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { TimeSeriesChartComponent } from '../components/time-series-chart/time-series-chart.component';
-import { DashboardComponent } from '../components/dashboard/dashboard.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { AgCharts } from 'ag-charts-angular';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -47,7 +46,6 @@ ModuleRegistry.registerModules([AllCommunityModule]);
     MatButtonToggleModule,
     MatFormFieldModule,
     MatInputModule,
-    DashboardComponent,
     TimeSeriesChartComponent,
     MlTimeSeriesComponent,
     RouterModule,

@@ -5,7 +5,10 @@
     <button (click)="stop()">stop streaming</button>
     <button (click)="webSocket()">Connect WS</button> -->
     <button (click)="fetchStockData()">Fetch training data</button>
-
+    <mat-progress-spinner class="spinner-border text-primary" *ngIf="loading" mode="indeterminate" diameter="30" color="primary"></mat-progress-spinner>
+    <div *ngIf="loading" class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>      
     <div class="chart-container">
     <!-- <mat-grid-list cols="1" rowHeight="2:1">
         <mat-grid-tile> -->
@@ -24,12 +27,18 @@
         <ag-grid-angular
         [rowData]="rowData"
         [columnDefs]="colDefs"
-        style="height: 200px;"/>
+        style="height: 400px; width: 450px;"/>
             <!-- </mat-grid-tile>
           </mat-grid-list> -->
-    <div >        
-        <input type="text" [(ngModel)]="mlflow_reg_model">
-        <button (click)="get_run_id(mlflow_reg_model)">Get all version</button>
+    <div class="container-mat text-center"> 
+        <div class="row">
+            <div class="col">
+                <input type="text" [(ngModel)]="mlflow_reg_model">
+                <button (click)="get_run_id(mlflow_reg_model)">Get all version</button>
+            </div>
+            </div>       
+            <div class="row">
+                <div class="col">
         <mat-form-field>
             <mat-label>Get all registerd versions</mat-label>
             <mat-select [(value)]="mlflow_run_id">
@@ -38,8 +47,14 @@
                 }
             </mat-select>
             </mat-form-field>
-        <input type="text" [(ngModel)]="mlflow_run_id">
-        <button (click)="predictionChart()">Prediction on test data</button> <br>
+        <!-- <input type="text" [(ngModel)]="mlflow_run_id"> -->
+        <button (click)="predictionChart()">Prediction on test data</button>
+        <mat-progress-spinner class="spinner-border text-primary" *ngIf="pred_loading" mode="indeterminate" diameter="30" color="primary"></mat-progress-spinner>
+        <div *ngIf="pred_loading" class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div> 
+    </div>
+</div> 
         <p>{{mlflow_run_id}}</p>
     </div>
         <apx-chart
