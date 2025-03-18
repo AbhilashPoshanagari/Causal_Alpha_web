@@ -1,0 +1,76 @@
+<div class="container">
+<main class="dashboard-container">
+    <h2>Trading Forecast Dashboard</h2>
+    <!-- <button (click)="start()">start streaming</button>
+    <button (click)="stop()">stop streaming</button>
+    <button (click)="webSocket()">Connect WS</button> -->
+    <button (click)="fetchStockData()">Fetch training data</button>
+
+    <div class="chart-container">
+    <!-- <mat-grid-list cols="1" rowHeight="2:1">
+        <mat-grid-tile> -->
+            <apx-chart
+        [series]="series"
+        [chart]="chart"
+        [dataLabels]="dataLabels"
+        [markers]="markers"
+        [title]="title"
+        [fill]="fill"
+        [yaxis]="yaxis"
+        [xaxis]="xaxis"
+        [tooltip]="tooltip"
+        [autoUpdateSeries]="true"
+        ></apx-chart>
+        <ag-grid-angular
+        [rowData]="rowData"
+        [columnDefs]="colDefs"
+        style="height: 200px;"/>
+            <!-- </mat-grid-tile>
+          </mat-grid-list> -->
+    <div >        
+        <input type="text" [(ngModel)]="mlflow_reg_model">
+        <button (click)="get_run_id(mlflow_reg_model)">Get all version</button>
+        <mat-form-field>
+            <mat-label>Get all registerd versions</mat-label>
+            <mat-select [(value)]="mlflow_run_id">
+                @for (version of allRegistredModels; track version) {
+                <mat-option [value]="version.run_id">{{version.version}}</mat-option>
+                }
+            </mat-select>
+            </mat-form-field>
+        <input type="text" [(ngModel)]="mlflow_run_id">
+        <button (click)="predictionChart()">Prediction on test data</button> <br>
+        <p>{{mlflow_run_id}}</p>
+    </div>
+        <apx-chart
+        [series]="prediction"
+        [chart]="chart"
+        [dataLabels]="dataLabels"
+        [markers]="markers"
+        [title]="predictionTitle"
+        [fill]="fill"
+        [yaxis]="yaxis"
+        [xaxis]="xaxis"
+        [tooltip]="tooltip"
+        [autoUpdateSeries]="true"
+        ></apx-chart>
+        <ag-grid-angular
+        [rowData]="pred_values"
+        [columnDefs]="pred_col"
+        style="height: 400px;"/>
+        <mat-grid-list cols="1" rowHeight="2:1">
+        <mat-grid-tile>
+        <ag-grid-angular
+        [rowData]="parameters"
+        [columnDefs]="parameters_col"
+        style="height: 400px; width: 450px;"/>
+        <ag-grid-angular
+        [rowData]="metrics"
+        [columnDefs]="metrics_col" 
+        style="height: 400px; width:450px"/>
+        </mat-grid-tile>
+          </mat-grid-list>
+</div>
+
+</main>
+</div>

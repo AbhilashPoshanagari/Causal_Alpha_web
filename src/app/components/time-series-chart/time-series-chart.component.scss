@@ -1,0 +1,31 @@
+/* app.component.scss */
+.spacer {
+    flex: 1 1 auto;
+  }
+  
+  .content {
+    padding: 16px;
+  }
+  
+  .grid {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .grid-item {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .positive {
+    color: green;
+  }
+  
+  .negative {
+    color: red;
+  }
+  
+  .full-width {
+    width: 100%;
+    margin-top: 16px;
+  }

@@ -1,0 +1,9 @@
+.header { display: flex; align-items: center; background: #007bff; color: white; padding: 10px; }
+.toggle-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
+.title { margin-left: 20px; font-size: 24px; }
+.sidebar { position: fixed; left: 0; top: 50px; width: 200px; background: #f8f9fa; height: 100vh; padding: 10px; box-shadow: 2px 0 5px rgba(0,0,0,0.1); transition: width 0.3s; }
+.sidebar.hidden { width: 0; overflow: hidden; }
+.menu { list-style-type: none; padding: 0; }
+.menu li { margin: 10px 0; }
+main { margin-left: 210px; padding: 20px; transition: margin-left 0.3s; }
+main.expanded { margin-left: 10px; }

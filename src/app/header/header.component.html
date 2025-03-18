@@ -1,0 +1,14 @@
+<header class="header">
+    <button (click)="toggleMenu()" class="toggle-btn">☰ Menu</button>
+    <h1 class="title">Dashboard</h1>
+  </header>
+  <nav [class.hidden]="!isMenuVisible" class="sidebar">
+    <ul class="menu">
+      <li *ngFor="let item of menuItems">
+        <button (click)="navigateTo(item.route)">{{ item.name }}</button>
+      </li>
+    </ul>
+  </nav>
+  <main [class.expanded]="!isMenuVisible">
+    <router-outlet></router-outlet>
+  </main>

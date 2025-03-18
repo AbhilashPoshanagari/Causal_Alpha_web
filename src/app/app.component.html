@@ -1,0 +1,20 @@
+  <mat-toolbar color="primary" class="header">
+    <button mat-icon-button (click)="toggleMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="title">Dashboard</span>
+  </mat-toolbar>
+  <div class="content-wrapper">
+    <nav [class.hidden]="!isMenuVisible" class="sidebar">
+      <ul class="menu">
+        <li *ngFor="let item of menuItems; index as i">
+          <button mat-button (click)="navigateTo(item.route)">{{ item.name }}</button>
+          <button mat-button (click)="openDomainDialog(i)">{{ item.domain }}</button>
+
+        </li>
+      </ul>
+    </nav>
+    <main [class.expanded]="!isMenuVisible">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
